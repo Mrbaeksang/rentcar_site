@@ -1,7 +1,6 @@
 'use client';
 
 import { ChevronDown } from 'lucide-react';
-import Image from 'next/image';
 import { siteConfig } from '@/config/site';
 import FlowingMenu from '@/components/FlowingMenu';
 
@@ -17,6 +16,7 @@ export const Hero = () => {
         <video
           autoPlay
           muted
+          loop
           playsInline
           className="w-full h-full object-cover min-h-screen"
           style={{
@@ -24,18 +24,8 @@ export const Hero = () => {
             height: '100%',
             objectFit: 'cover'
           }}
-          poster="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&q=80"
         >
           <source src="/videos/RENTIP.mp4" type="video/mp4" />
-          {/* Fallback for browsers that don't support video */}
-          <Image
-            src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&q=80"
-            alt="Luxury Car"
-            fill
-            className="object-cover"
-            priority
-            quality={90}
-          />
         </video>
       </div>
 
