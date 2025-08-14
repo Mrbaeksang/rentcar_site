@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이카렌터카 - 프리미엄 수입차 렌탈</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    animation: {
+                        'gradient': 'gradient 3s ease infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'shimmer': 'shimmer 2s infinite'
+                    },
+                    keyframes: {
+                        gradient: {
+                            '0%, 100%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        shimmer: {
+                            '0%': { transform: 'translateX(-100%)' },
+                            '100%': { transform: 'translateX(100%)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 글래스모피즘 효과 */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-dark {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* 라이트 모드 글래스 효과 */
+        .light .glass {
+            background: rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .light .glass-dark {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        /* 그라디언트 텍스트 */
+        .gradient-text {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            background-size: 400% 400%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 3s ease infinite;
+        }
+
+        /* 반짝이는 효과 */
+        .shimmer {
+            position: relative;
+            overflow: hidden;
+        }
+        .shimmer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        /* Aurora 배경 효과 모방 */
+        .aurora-bg {
+            background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #1a1a2e);
+            background-size: 400% 400%;
+            animation: gradient 8s ease infinite;
+        }
+
+        /* 차량 카드 호버 효과 */
+        .car-card {
+            transition: all 0.3s ease;
+        }
+        .car-card:hover {
+            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* 마소리 그리드 */
+        .masonry-grid {
+            column-count: 1;
+            column-gap: 1.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .masonry-grid {
+                column-count: 2;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .masonry-grid {
+                column-count: 3;
+            }
+        }
+
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+        }
+
+        /* 커스텀 스크롤바 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* 라이트박스 */
+        .lightbox {
+            display: none;
+        }
+        .lightbox.active {
+            display: flex;
+        }
+    </style>
+</head>
+<body class="dark bg-black text-white transition-colors duration-300">
+
+    <!-- 네비게이션 -->
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-6">
+                <!-- 로고 -->
+                <a href="#" class="text-2xl font-bold">
+                    <span class="gradient-text">아이카렌터카</span>
+                </a>
+
+                <!-- 데스크톱 메뉴 -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="hover:text-gray-300 transition-colors">홈</a>
+                    <a href="#cars" class="hover:text-gray-300 transition-colors">차량</a>
+                    <a href="#gallery" class="hover:text-gray-300 transition-colors">갤러리</a>
+                    <a href="#services" class="hover:text-gray-300 transition-colors">서비스</a>
+                    <a href="#contact" class="hover:text-gray-300 transition-colors">연락처</a>
+                    
+                    <!-- 테마 토글 버튼 -->
+                    <button onclick="toggleTheme()" class="glass px-3 py-2 rounded-full hover:bg-white/20 transition-all">
+                        <span id="theme-icon">🌙</span>
+                    </button>
+                </div>
+
+                <!-- 모바일 메뉴 버튼 -->
+                <button class="md:hidden" onclick="toggleMobileMenu()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- 모바일 메뉴 -->
+        <div id="mobile-menu" class="hidden md:hidden glass-dark">
+            <div class="px-4 py-6 space-y-4">
+                <a href="#home" class="block hover:text-gray-300 transition-colors">홈</a>
+                <a href="#cars" class="block hover:text-gray-300 transition-colors">차량</a>
+                <a href="#gallery" class="block hover:text-gray-300 transition-colors">갤러리</a>
+                <a href="#services" class="block hover:text-gray-300 transition-colors">서비스</a>
+                <a href="#contact" class="block hover:text-gray-300 transition-colors">연락처</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 히어로 섹션 -->
+    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden aurora-bg">
+        <div class="absolute inset-0 bg-black/30"></div>
+        
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6">
+                <span class="gradient-text">Premium Car Rental</span>
+            </h1>
+            
+            <p class="text-xl md:text-2xl mb-8 text-gray-300">
+                최고급 수입차로 특별한 경험을
+            </p>
+
+            <!-- CTA 버튼들 -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="glass px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/20 transition-all shimmer">
+                    📞 1599-4826
+                </button>
+                <button class="glass px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/20 transition-all">
+                    💬 카카오톡 상담
+                </button>
+                <button class="glass px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/20 transition-all">
+                    📷 인스타그램
+                </button>
+            </div>
+        </div>
+
+        <!-- 스크롤 인디케이터 -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-8 h-8 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- 인기 차량 섹션 -->
+    <section id="cars" class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    <span class="gradient-text">인기 차량</span>
+                </h2>
+                <p class="text-xl text-gray-400">프리미엄 브랜드의 최신 모델들</p>
+            </div>
+
+            <!-- 차량 그리드 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 차량 카드 1 -->
+                <div class="glass car-card rounded-2xl overflow-hidden group">
+                    <div class="relative h-48 md:h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=600&h=400&fit=crop" 
+                             alt="람보르기니 우루스" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-4 left-4 glass px-3 py-1 rounded-full">
+                            <span class="text-xs font-bold">FEATURED</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-2">
+                            <p class="text-sm text-gray-400">람보르기니</p>
+                            <h3 class="text-xl font-bold">우루스 S</h3>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-2">2024 • 자동 • 5인승</p>
+                        <p class="text-gray-300 text-xs mb-4">최고급 SUV의 정점</p>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-2xl font-bold shimmer">1,500,000원</p>
+                                <p class="text-xs text-gray-400">/일</p>
+                            </div>
+                            <button class="glass px-4 py-2 rounded-full text-sm hover:bg-white/20 transition-all">
+                                상세보기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 차량 카드 2 -->
+                <div class="glass car-card rounded-2xl overflow-hidden group">
+                    <div class="relative h-48 md:h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?w=600&h=400&fit=crop" 
+                             alt="벤틀리 컨티넨탈" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-4 left-4 glass px-3 py-1 rounded-full">
+                            <span class="text-xs font-bold">FEATURED</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-2">
+                            <p class="text-sm text-gray-400">벤틀리</p>
+                            <h3 class="text-xl font-bold">컨티넨탈 GT</h3>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-2">2024 • 자동 • 4인승</p>
+                        <p class="text-gray-300 text-xs mb-4">럭셔리 쿠페의 대명사</p>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-2xl font-bold shimmer">1,200,000원</p>
+                                <p class="text-xs text-gray-400">/일</p>
+                            </div>
+                            <button class="glass px-4 py-2 rounded-full text-sm hover:bg-white/20 transition-all">
+                                상세보기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 차량 카드 3 -->
+                <div class="glass car-card rounded-2xl overflow-hidden group">
+                    <div class="relative h-48 md:h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1556189250-72ba954cfc2b?w=600&h=400&fit=crop" 
+                             alt="포르쉐 911" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-4 left-4 glass px-3 py-1 rounded-full">
+                            <span class="text-xs font-bold">FEATURED</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-2">
+                            <p class="text-sm text-gray-400">포르쉐</p>
+                            <h3 class="text-xl font-bold">911 카레라</h3>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-2">2024 • 자동 • 2인승</p>
+                        <p class="text-gray-300 text-xs mb-4">스포츠카의 아이콘</p>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-2xl font-bold shimmer">800,000원</p>
+                                <p class="text-xs text-gray-400">/일</p>
+                            </div>
+                            <button class="glass px-4 py-2 rounded-full text-sm hover:bg-white/20 transition-all">
+                                상세보기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 갤러리 섹션 -->
+    <section id="gallery" class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    <span class="gradient-text">차량 갤러리</span>
+                </h2>
+                <p class="text-xl text-gray-400">다양한 각도에서 감상하는 프리미엄 차량들</p>
+            </div>
+
+            <!-- 마소리 그리드 -->
+            <div class="masonry-grid">
+                <div class="masonry-item glass rounded-lg overflow-hidden cursor-pointer hover:bg-white/10 transition-all" onclick="openLightbox('https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800')">
+                    <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=400&h=300&fit=crop" 
+                         alt="차량 사진" 
+                         class="w-full h-auto">
+                    <div class="p-4">
+                        <p class="text-sm font-semibold">람보르기니 우루스</p>
+                        <p class="text-xs text-gray-400">프론트 뷰</p>
+                    </div>
+                </div>
+
+                <div class="masonry-item glass rounded-lg overflow-hidden cursor-pointer hover:bg-white/10 transition-all" onclick="openLightbox('https://images.unsplash.com/photo-1563720223185-11003d516935?w=800')">
+                    <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?w=400&h=400&fit=crop" 
+                         alt="차량 사진" 
+                         class="w-full h-auto">
+                    <div class="p-4">
+                        <p class="text-sm font-semibold">벤틀리 컨티넨탈</p>
+                        <p class="text-xs text-gray-400">사이드 뷰</p>
+                    </div>
+                </div>
+
+                <div class="masonry-item glass rounded-lg overflow-hidden cursor-pointer hover:bg-white/10 transition-all" onclick="openLightbox('https://images.unsplash.com/photo-1556189250-72ba954cfc2b?w=800')">
+                    <img src="https://images.unsplash.com/photo-1556189250-72ba954cfc2b?w=400&h=500&fit=crop" 
+                         alt="차량 사진" 
+                         class="w-full h-auto">
+                    <div class="p-4">
+                        <p class="text-sm font-semibold">포르쉐 911</p>
+                        <p class="text-xs text-gray-400">리어 뷰</p>
+                    </div>
+                </div>
+
+                <div class="masonry-item glass rounded-lg overflow-hidden cursor-pointer hover:bg-white/10 transition-all" onclick="openLightbox('https://images.unsplash.com/photo-1606220838315-056192d5e927?w=800')">
+                    <img src="https://images.unsplash.com/photo-1606220838315-056192d5e927?w=400&h=250&fit=crop" 
+                         alt="차량 사진" 
+                         class="w-full h-auto">
+                    <div class="p-4">
+                        <p class="text-sm font-semibold">벤츠 G63 AMG</p>
+                        <p class="text-xs text-gray-400">액션 샷</p>
+                    </div>
+                </div>
+
+                <div class="masonry-item glass rounded-lg overflow-hidden cursor-pointer hover:bg-white/10 transition-all" onclick="openLightbox('https://images.unsplash.com/photo-1617531653332-bd46c24f2068?w=800')">
+                    <img src="https://images.unsplash.com/photo-1617531653332-bd46c24f2068?w=400&h=350&fit=crop" 
+                         alt="차량 사진" 
+                         class="w-full h-auto">
+                    <div class="p-4">
+                        <p class="text-sm font-semibold">BMW M4 컨버터블</p>
+                        <p class="text-xs text-gray-400">오픈 톱</p>
+                    </div>
+                </div>
+
+                <div class="masonry-item glass rounded-lg overflow-hidden cursor-pointer hover:bg-white/10 transition-all" onclick="openLightbox('https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800')">
+                    <img src="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=400&h=450&fit=crop" 
+                         alt="차량 사진" 
+                         class="w-full h-auto">
+                    <div class="p-4">
+                        <p class="text-sm font-semibold">랜드로버 레인지로버</p>
+                        <p class="text-xs text-gray-400">인테리어</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 서비스 섹션 -->
+    <section id="services" class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    <span class="gradient-text">서비스 특징</span>
+                </h2>
+                <p class="text-xl text-gray-400">차별화된 프리미엄 서비스</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass rounded-2xl p-8 text-center hover:bg-white/10 transition-all">
+                    <div class="text-4xl mb-4">🛡️</div>
+                    <h3 class="text-xl font-bold mb-4">보험대차</h3>
+                    <p class="text-gray-400">사고 시 대체차량 제공으로 안심 렌탈</p>
+                </div>
+                
+                <div class="glass rounded-2xl p-8 text-center hover:bg-white/10 transition-all">
+                    <div class="text-4xl mb-4">👑</div>
+                    <h3 class="text-xl font-bold mb-4">VIP 서비스</h3>
+                    <p class="text-gray-400">픽업/반납 서비스와 전담 매니저</p>
+                </div>
+                
+                <div class="glass rounded-2xl p-8 text-center hover:bg-white/10 transition-all">
+                    <div class="text-4xl mb-4">📞</div>
+                    <h3 class="text-xl font-bold mb-4">24시간 지원</h3>
+                    <p class="text-gray-400">언제든 연락 가능한 고객 지원</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 연락처 섹션 -->
+    <section id="contact" class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    <span class="gradient-text">연락처</span>
+                </h2>
+                <p class="text-xl text-gray-400">언제든지 문의해 주세요</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- 연락처 정보 -->
+                <div class="glass rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold mb-6">아이카렌터카</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <span class="text-2xl mr-4">📞</span>
+                            <div>
+                                <p class="font-semibold">전화번호</p>
+                                <p class="text-gray-400">1599-4826</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-2xl mr-4">✉️</span>
+                            <div>
+                                <p class="font-semibold">이메일</p>
+                                <p class="text-gray-400">i-car@naver.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-2xl mr-4">📍</span>
+                            <div>
+                                <p class="font-semibold">주소</p>
+                                <p class="text-gray-400">서울시 강남구 논현로 553</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 지도 영역 -->
+                <div class="glass rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold mb-6">오시는 길</h3>
+                    <div class="bg-gray-700 rounded-lg h-64 flex items-center justify-center">
+                        <p class="text-gray-400">지도가 여기에 표시됩니다</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 플로팅 버튼 -->
+    <div class="fixed right-6 bottom-6 flex flex-col gap-4 z-40">
+        <button class="glass w-12 h-12 rounded-full flex items-center justify-center hover:bg-white/20 transition-all animate-float">
+            💬
+        </button>
+        <button onclick="scrollToTop()" class="glass w-12 h-12 rounded-full flex items-center justify-center hover:bg-white/20 transition-all">
+            ↑
+        </button>
+    </div>
+
+    <!-- 라이트박스 -->
+    <div id="lightbox" class="lightbox fixed inset-0 z-50 bg-black/90 items-center justify-center p-4">
+        <div class="relative max-w-4xl w-full">
+            <button onclick="closeLightbox()" class="absolute top-4 right-4 glass p-2 rounded-full text-white hover:bg-white/20 transition-colors z-10">
+                ✕
+            </button>
+            <img id="lightbox-img" src="" alt="" class="w-full h-auto rounded-lg">
+        </div>
+    </div>
+
+    <script>
+        // 테마 전환
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            
+            if (body.classList.contains('dark')) {
+                body.classList.remove('dark');
+                body.classList.add('light');
+                body.classList.remove('bg-black', 'text-white');
+                body.classList.add('bg-white', 'text-black');
+                icon.textContent = '☀️';
+            } else {
+                body.classList.add('dark');
+                body.classList.remove('light');
+                body.classList.remove('bg-white', 'text-black');
+                body.classList.add('bg-black', 'text-white');
+                icon.textContent = '🌙';
+            }
+        }
+
+        // 모바일 메뉴 토글
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // 스크롤 네비게이션
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('glass-dark');
+                navbar.classList.remove('py-6');
+                navbar.classList.add('py-3');
+            } else {
+                navbar.classList.remove('glass-dark');
+                navbar.classList.add('py-6');
+                navbar.classList.remove('py-3');
+            }
+        });
+
+        // 라이트박스
+        function openLightbox(src) {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            img.src = src;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+        }
+
+        // 탑으로 스크롤
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 부드러운 스크롤
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

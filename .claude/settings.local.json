@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__react-bits-mcp__search_components",
+      "mcp__react-bits-mcp__list_components",
+      "mcp__react-bits-mcp__get_component_info",
+      "WebFetch(domain:icar-rentcar.com)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_evaluate",
+      "Bash(rm:*)",
+      "mcp__playwright__browser_click",
+      "Bash(npm install:*)",
+      "WebSearch",
+      "mcp__playwright__browser_snapshot",
+      "WebFetch(domain:www.pexels.com)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

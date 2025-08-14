@@ -1,0 +1,14 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# 크롤링 속도 제한 (선택사항)
+Crawl-delay: 1
+
+# 사이트맵 위치
+Sitemap: https://icar-rentcar.com/sitemap.xml
+
+# 차단할 경로 (관리자 페이지 등)
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
