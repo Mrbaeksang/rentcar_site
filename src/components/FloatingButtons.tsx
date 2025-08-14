@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Phone, MessageCircle, ChevronUp } from 'lucide-react';
+import { ChevronUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { siteConfig } from '@/config/site';
+import Image from 'next/image';
 
 export const FloatingButtons = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -41,7 +42,13 @@ export const FloatingButtons = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.2 }}
       >
-        <MessageCircle size={24} className="text-black" />
+        <Image 
+          src="/images/kakao.png"
+          alt="카카오톡"
+          width={24}
+          height={24}
+          className="object-contain filter brightness-0"
+        />
         
         {/* Tooltip */}
         <div className="absolute right-full mr-3 px-3 py-2 bg-black/80 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
@@ -63,7 +70,13 @@ export const FloatingButtons = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.3 }}
       >
-        <Phone size={24} className="text-white" />
+        <Image 
+          src="/images/tele.png"
+          alt="전화"
+          width={24}
+          height={24}
+          className="object-contain filter brightness-0 invert"
+        />
         
         {/* Tooltip */}
         <div className="absolute right-full mr-3 px-3 py-2 bg-black/80 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
