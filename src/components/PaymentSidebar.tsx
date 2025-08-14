@@ -351,7 +351,7 @@ export const PaymentSidebar = ({ isOpen, onClose, car }: PaymentSidebarProps) =>
                       const newCar = DEFAULT_CARS.find(c => c.id === Number(e.target.value));
                       if (newCar) setSelectedCar(newCar);
                     }}
-                    className="w-full p-3 bg-black/50 border border-white/20 rounded-lg text-white focus:outline-none focus:border-red-500 [&>option]:text-black"
+                    className="w-full p-3 bg-black/50 border border-white/20 rounded-lg text-white focus:outline-none focus:border-blue-500 [&>option]:text-black"
                   >
                     {DEFAULT_CARS.map((c) => (
                       <option key={c.id} value={c.id}>
@@ -399,11 +399,11 @@ export const PaymentSidebar = ({ isOpen, onClose, car }: PaymentSidebarProps) =>
                 {[1, 2, 3].map((s) => (
                   <div key={s} className="flex items-center">
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold
-                      ${step >= s ? 'bg-red-600 text-white' : 'bg-white/10 text-gray-500'}`}>
+                      ${step >= s ? 'bg-blue-600 text-white' : 'bg-white/10 text-gray-500'}`}>
                       {s}
                     </div>
                     {s < 3 && (
-                      <div className={`w-20 h-0.5 mx-2 ${step > s ? 'bg-red-600' : 'bg-white/10'}`} />
+                      <div className={`w-20 h-0.5 mx-2 ${step > s ? 'bg-blue-600' : 'bg-white/10'}`} />
                     )}
                   </div>
                 ))}
@@ -433,7 +433,7 @@ export const PaymentSidebar = ({ isOpen, onClose, car }: PaymentSidebarProps) =>
                       type="date"
                       value={startDate}
                       onChange={(e) => setStartDate(e.target.value)}
-                      className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-red-500"
+                      className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-blue-500"
                     />
                   </div>
 
@@ -445,7 +445,7 @@ export const PaymentSidebar = ({ isOpen, onClose, car }: PaymentSidebarProps) =>
                     <select
                       value={startTime}
                       onChange={(e) => setStartTime(e.target.value)}
-                      className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-red-500 [&>option]:bg-black [&>option]:text-white"
+                      className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-blue-500 [&>option]:bg-black [&>option]:text-white"
                     >
                       {Array.from({ length: 24 }, (_, i) => (
                         <option key={i} value={`${i.toString().padStart(2, '0')}:00`}>
@@ -515,7 +515,7 @@ export const PaymentSidebar = ({ isOpen, onClose, car }: PaymentSidebarProps) =>
                       value={customerName}
                       onChange={(e) => setCustomerName(e.target.value)}
                       placeholder="홍길동"
-                      className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-red-500"
+                      className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
                     />
                   </div>
 
@@ -531,7 +531,7 @@ export const PaymentSidebar = ({ isOpen, onClose, car }: PaymentSidebarProps) =>
                         onChange={handlePhone1Change}
                         placeholder="010"
                         maxLength={3}
-                        className="w-[23%] p-3 bg-white/10 border border-white/20 rounded-lg text-white text-center placeholder-gray-500 focus:outline-none focus:border-red-500"
+                        className="w-[23%] p-3 bg-white/10 border border-white/20 rounded-lg text-white text-center placeholder-gray-500 focus:outline-none focus:border-blue-500"
                       />
                       <span className="text-white">-</span>
                       <input
@@ -548,7 +548,7 @@ export const PaymentSidebar = ({ isOpen, onClose, car }: PaymentSidebarProps) =>
                         }}
                         placeholder="1234"
                         maxLength={4}
-                        className="w-[30%] p-3 bg-white/10 border border-white/20 rounded-lg text-white text-center placeholder-gray-500 focus:outline-none focus:border-red-500"
+                        className="w-[30%] p-3 bg-white/10 border border-white/20 rounded-lg text-white text-center placeholder-gray-500 focus:outline-none focus:border-blue-500"
                       />
                       <span className="text-white">-</span>
                       <input
@@ -564,7 +564,7 @@ export const PaymentSidebar = ({ isOpen, onClose, car }: PaymentSidebarProps) =>
                         }}
                         placeholder="5678"
                         maxLength={4}
-                        className="w-[30%] p-3 bg-white/10 border border-white/20 rounded-lg text-white text-center placeholder-gray-500 focus:outline-none focus:border-red-500"
+                        className="w-[30%] p-3 bg-white/10 border border-white/20 rounded-lg text-white text-center placeholder-gray-500 focus:outline-none focus:border-blue-500"
                       />
                     </div>
                   </div>
@@ -658,7 +658,7 @@ export const PaymentSidebar = ({ isOpen, onClose, car }: PaymentSidebarProps) =>
                 {step < 3 ? (
                   <button
                     onClick={nextStep}
-                    className="flex-1 py-4 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition-colors flex items-center justify-center gap-2"
+                    className="flex-1 py-4 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
                   >
                     다음
                     <ChevronRight size={20} />
@@ -666,7 +666,7 @@ export const PaymentSidebar = ({ isOpen, onClose, car }: PaymentSidebarProps) =>
                 ) : (
                   <button
                     onClick={handlePayment}
-                    className="flex-1 py-4 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition-colors flex items-center justify-center gap-2"
+                    className="flex-1 py-4 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
                   >
                     <CreditCard size={20} />
                     결제하기

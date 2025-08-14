@@ -67,7 +67,7 @@ const MarqueeRow = ({ cars, direction, speed, onCarClick }: MarqueeRowProps) => 
                     </span>
                     <span className="text-xs md:text-sm text-gray-400">만원/일</span>
                   </div>
-                  <button className="px-3 py-1 md:px-4 md:py-2 bg-red-600 hover:bg-red-700 rounded-lg text-xs md:text-sm font-semibold transition-colors">
+                  <button className="px-3 py-1 md:px-4 md:py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-xs md:text-sm font-semibold transition-colors">
                     예약
                   </button>
                 </div>

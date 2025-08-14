@@ -39,7 +39,7 @@ export const Navigation = () => {
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="text-red-600 text-2xl font-bold z-10">
+          <Link href="/" className="text-blue-600 text-2xl font-bold z-10">
             RENTIP
           </Link>
 
@@ -57,7 +57,7 @@ export const Navigation = () => {
                   className={cn(
                     "relative cursor-pointer text-sm font-semibold px-6 py-2 rounded-full transition-colors",
                     "text-white/80 hover:text-white",
-                    isActive && "text-red-400"
+                    isActive && "text-blue-400"
                   )}
                 >
                   <span className="hidden lg:inline">{item.label}</span>
@@ -67,7 +67,7 @@ export const Navigation = () => {
                   {isActive && (
                     <motion.div
                       layoutId="navHighlight"
-                      className="absolute inset-0 w-full bg-red-500/20 rounded-full -z-10"
+                      className="absolute inset-0 w-full bg-blue-500/20 rounded-full -z-10"
                       initial={false}
                       transition={{
                         type: "spring",
@@ -75,10 +75,10 @@ export const Navigation = () => {
                         damping: 30,
                       }}
                     >
-                      <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-red-500 rounded-t-full">
-                        <div className="absolute w-12 h-6 bg-red-500/30 rounded-full blur-md -top-2 -left-2" />
-                        <div className="absolute w-8 h-6 bg-red-500/20 rounded-full blur-md -top-1" />
-                        <div className="absolute w-4 h-4 bg-red-500/20 rounded-full blur-sm top-0 left-2" />
+                      <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-blue-500 rounded-t-full">
+                        <div className="absolute w-12 h-6 bg-blue-500/30 rounded-full blur-md -top-2 -left-2" />
+                        <div className="absolute w-8 h-6 bg-blue-500/20 rounded-full blur-md -top-1" />
+                        <div className="absolute w-4 h-4 bg-blue-500/20 rounded-full blur-sm top-0 left-2" />
                       </div>
                     </motion.div>
                   )}
@@ -90,10 +90,10 @@ export const Navigation = () => {
           {/* Contact Button */}
           <div className="hidden md:block">
             <a
-              href="tel:010-2984-1376"
-              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg"
+              href="tel:010-2984-1379"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg"
             >
-              010-2984-1376
+              010-2984-1379
             </a>
           </div>
 
@@ -124,7 +124,7 @@ export const Navigation = () => {
               <motion.a
                 key={item.label}
                 href={item.href}
-                className="flex items-center gap-3 text-white hover:text-red-400 py-2 transition-colors"
+                className="flex items-center gap-3 text-white hover:text-blue-400 py-2 transition-colors"
                 onClick={() => {
                   setActiveTab(item.label);
                   setIsMobileMenuOpen(false);
@@ -145,8 +145,8 @@ export const Navigation = () => {
             );
           })}
           <motion.a
-            href="tel:010-2984-1376"
-            className="flex items-center justify-center gap-2 bg-red-600 text-white px-4 py-3 rounded-full text-center mt-4 transition-all hover:bg-red-700"
+            href="tel:010-2984-1379"
+            className="flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-3 rounded-full text-center mt-4 transition-all hover:bg-blue-700"
             onClick={() => setIsMobileMenuOpen(false)}
             initial={{ opacity: 0, y: 20 }}
             animate={{ 
@@ -159,7 +159,7 @@ export const Navigation = () => {
             }}
           >
             <Phone size={18} />
-            010-2984-1376
+            010-2984-1379
           </motion.a>
         </div>
       </motion.div>

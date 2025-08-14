@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { XCircle } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
-export default function FailPage() {
+function FailContent() {
   const searchParams = useSearchParams();
   const [orderId, setOrderId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -30,9 +30,9 @@ export default function FailPage() {
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-          className="w-24 h-24 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-6"
+          className="w-24 h-24 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-6"
         >
-          <XCircle size={48} className="text-red-500" />
+          <XCircle size={48} className="text-blue-500" />
         </motion.div>
 
         <h1 className="text-3xl font-bold text-white mb-4">
@@ -53,13 +53,13 @@ export default function FailPage() {
         <div className="space-y-3">
           <Link 
             href="/"
-            className="block w-full py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors"
+            className="block w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors"
           >
             다시 시도하기
           </Link>
           
           <a 
-            href="tel:1599-4826"
+            href="tel:01029841379"
             className="block w-full py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg font-semibold transition-colors"
           >
             고객센터 문의
@@ -78,5 +78,17 @@ export default function FailPage() {
         </div>
       </motion.div>
     </div>
+  );
+}
+
+export default function FailPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-white">Loading...</div>
+      </div>
+    }>
+      <FailContent />
+    </Suspense>
   );
 }

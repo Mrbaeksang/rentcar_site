@@ -88,7 +88,7 @@ export const FloatingButtons = () => {
         {/* Phone Button */}
         <motion.button
           onClick={handleCall}
-          className="group relative w-14 h-14 md:w-16 md:h-16 bg-red-600 hover:bg-red-700 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
+          className="group relative w-14 h-14 md:w-16 md:h-16 bg-blue-600 hover:bg-blue-700 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
           initial={{ opacity: 0, x: 100 }}
@@ -104,7 +104,7 @@ export const FloatingButtons = () => {
           </div>
 
           {/* Glow Effect */}
-          <div className="absolute inset-0 rounded-full bg-red-500/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-lg"></div>
+          <div className="absolute inset-0 rounded-full bg-blue-500/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-lg"></div>
         </motion.button>
 
         {/* Scroll to Top Button */}

@@ -4,6 +4,7 @@ import './globals.css';
 import { AOSInit } from '@/components/AOSInit';
 import { Navigation } from '@/components/Navigation';
 import { FloatingButtons } from '@/components/FloatingButtons';
+import { Footer } from '@/components/Footer';
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AOSInit />
         <Navigation />
         {children}
+        <Footer />
         <FloatingButtons />
       </body>
     </html>
