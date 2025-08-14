@@ -22,16 +22,16 @@ export const Services = () => {
   ];
 
   return (
-    <section id="services" className="py-24 px-4 bg-zinc-900">
+    <section id="services" className="py-12 sm:py-16 md:py-20 lg:py-24 px-4 bg-zinc-900">
       <div className="max-w-7xl mx-auto">
         <h2 
-          className="text-5xl md:text-6xl lg:text-7xl font-black text-center mb-16 text-white"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-center mb-8 sm:mb-12 md:mb-16 text-white"
           data-aos="fade-up"
         >
           SERVICES
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
@@ -39,13 +39,13 @@ export const Services = () => {
                 key={index} 
                 data-aos="fade-up"
                 data-aos-delay={index * 100}
-                className="text-center"
+                className="text-center px-4 sm:px-0"
               >
-                <div className="inline-flex items-center justify-center w-20 h-20 mb-6 border border-white/20 rounded-full">
-                  <Icon className="w-10 h-10 text-white" strokeWidth={1} />
+                <div className="inline-flex items-center justify-center w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 mb-4 sm:mb-5 md:mb-6 border border-white/20 rounded-full">
+                  <Icon className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 text-white" strokeWidth={1} />
                 </div>
-                <h3 className="text-2xl font-bold mb-3 text-white">{service.title}</h3>
-                <p className="text-gray-400">{service.description}</p>
+                <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 text-white">{service.title}</h3>
+                <p className="text-sm sm:text-base text-gray-400">{service.description}</p>
               </div>
             );
           })}

@@ -49,16 +49,16 @@ export const FeaturedCars = () => {
   ];
 
   return (
-    <section id="cars" className="py-24 px-4 bg-black">
+    <section id="cars" className="py-12 sm:py-16 md:py-20 lg:py-24 px-4 bg-black">
       <div className="max-w-7xl mx-auto">
         <h2 
-          className="text-5xl md:text-6xl lg:text-7xl font-black text-center mb-16 text-white"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-center mb-8 sm:mb-12 md:mb-16 text-white"
           data-aos="fade-up"
         >
           FEATURED CARS
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {cars.map((car, index) => (
             <div
               key={car.id}
@@ -66,31 +66,33 @@ export const FeaturedCars = () => {
               data-aos-delay={index * 100}
               className="group cursor-pointer"
             >
-              {/* Image Container */}
-              <div className="relative h-64 md:h-72 overflow-hidden bg-gray-900">
+              {/* Image Container - 모바일 최적화 */}
+              <div className="relative h-48 sm:h-56 md:h-64 lg:h-72 overflow-hidden bg-gray-900 rounded-t-xl">
                 <Image
                   src={car.image}
                   alt={`${car.brand} ${car.model}`}
                   fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
                 />
                 {/* Dark Overlay on Hover */}
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-500" />
               </div>
               
-              {/* Car Info - Minimalist */}
-              <div className="pt-4">
-                <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider">
+              {/* Car Info - 모바일 최적화 */}
+              <div className="pt-3 sm:pt-4 pb-1">
+                <h3 className="text-xs sm:text-sm font-medium text-gray-400 uppercase tracking-wider">
                   {car.brand}
                 </h3>
-                <p className="text-xl font-bold text-white mb-2">
+                <p className="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2">
                   {car.model}
                 </p>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-black text-white">
+                <div className="flex items-baseline gap-1 sm:gap-2">
+                  <span className="text-xl sm:text-2xl font-black text-white">
                     {car.price}
                   </span>
-                  <span className="text-gray-500">만원/일</span>
+                  <span className="text-sm sm:text-base text-gray-500">만원/일</span>
                 </div>
               </div>
             </div>
