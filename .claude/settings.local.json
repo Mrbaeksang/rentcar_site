@@ -14,7 +14,8 @@
       "WebSearch",
       "mcp__playwright__browser_snapshot",
       "WebFetch(domain:www.pexels.com)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "mcp__tosspayments-integration-guide__get-v2-documents"
     ],
     "deny": [],
     "ask": []
