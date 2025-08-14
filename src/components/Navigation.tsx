@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { Home, Car, Settings, Phone, Menu, X } from 'lucide-react';
+import { Home, Car, Settings, Phone, Menu, X, Sparkles } from 'lucide-react';
 
 export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -23,6 +23,7 @@ export const Navigation = () => {
   const navItems = [
     { label: '홈', href: '#home', icon: Home },
     { label: '차량', href: '#cars', icon: Car },
+    { label: '컬렉션', href: '#gallery', icon: Sparkles },
     { label: '서비스', href: '#services', icon: Settings },
     { label: '연락처', href: '#contact', icon: Phone }
   ];
