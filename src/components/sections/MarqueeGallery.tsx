@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { PaymentSidebar } from '@/components/PaymentSidebar';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface Car {
   id: number;
@@ -20,6 +21,7 @@ interface MarqueeRowProps {
   onCarClick: (car: Car) => void;
 }
 
+// 데스크탑용 마퀴 컴포넌트 (기존 유지)
 const MarqueeRow = ({ cars, direction, speed, onCarClick }: MarqueeRowProps) => {
   const [isPaused, setIsPaused] = useState(false);
   
@@ -85,9 +87,174 @@ const MarqueeRow = ({ cars, direction, speed, onCarClick }: MarqueeRowProps) => 
   );
 };
 
+// 모바일용 넷플릭스 스타일 컴포넌트
+interface NetflixCarouselProps {
+  cars: Car[];
+  onCarClick: (car: Car) => void;
+  category?: string;
+}
+
+const NetflixCarousel = ({ cars, onCarClick, category }: NetflixCarouselProps) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe && currentIndex < cars.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    }
+    if (isRightSwipe && currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
+  };
+
+  const goToPrevious = () => {
+    setCurrentIndex(Math.max(0, currentIndex - 1));
+  };
+
+  const goToNext = () => {
+    setCurrentIndex(Math.min(cars.length - 1, currentIndex + 1));
+  };
+
+  return (
+    <div className="relative">
+      {category && (
+        <h3 className="text-xl font-bold text-white mb-4 px-4 capitalize">
+          {category === 'sports' ? '스포츠카' : category === 'luxury' ? '럭셔리' : 'SUV'}
+        </h3>
+      )}
+      
+      <div className="relative group">
+        {/* 이전 버튼 */}
+        {currentIndex > 0 && (
+          <button
+            onClick={goToPrevious}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/50 text-white p-2 rounded-r-lg opacity-0 group-hover:opacity-100 transition-opacity md:hidden"
+          >
+            <ChevronLeft size={24} />
+          </button>
+        )}
+
+        {/* 다음 버튼 */}
+        {currentIndex < cars.length - 1 && (
+          <button
+            onClick={goToNext}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/50 text-white p-2 rounded-l-lg opacity-0 group-hover:opacity-100 transition-opacity md:hidden"
+          >
+            <ChevronRight size={24} />
+          </button>
+        )}
+
+        {/* 카드 컨테이너 */}
+        <div 
+          ref={containerRef}
+          className="overflow-hidden px-4"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          <div 
+            className="flex transition-transform duration-300 ease-out gap-2"
+            style={{ 
+              transform: `translateX(-${currentIndex * 85}%)` 
+            }}
+          >
+            {cars.map((car) => (
+              <div 
+                key={car.id}
+                className="flex-shrink-0 w-[85%] cursor-pointer"
+                onClick={() => onCarClick(car)}
+              >
+                <div className="relative h-48 sm:h-56 overflow-hidden rounded-lg">
+                  <Image 
+                    src={car.image} 
+                    alt={`${car.brand} ${car.model}`}
+                    fill
+                    className="object-cover"
+                    sizes="85vw"
+                  />
+                  
+                  {/* 그라디언트 오버레이 */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+                  
+                  {/* 차량 정보 - 심플하게 */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <h4 className="text-white font-bold text-lg">{car.brand}</h4>
+                    <p className="text-gray-300 text-sm mb-2">{car.model}</p>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-2xl font-black text-blue-400">
+                          {car.price}
+                        </span>
+                        <span className="text-xs text-gray-400">만원/일</span>
+                      </div>
+                      <button 
+                        className="px-4 py-2 bg-blue-600 text-white rounded-full text-sm font-semibold"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onCarClick(car);
+                        }}
+                      >
+                        예약
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* 인디케이터 도트 */}
+        <div className="flex justify-center gap-1.5 mt-4">
+          {cars.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                index === currentIndex 
+                  ? 'w-8 bg-blue-500' 
+                  : 'w-1.5 bg-gray-600'
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const MarqueeGallery = () => {
   const [selectedCar, setSelectedCar] = useState<Car | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleCarClick = (car: Car) => {
     setSelectedCar(car);
@@ -96,7 +263,7 @@ export const MarqueeGallery = () => {
 
   const handleCloseSidebar = () => {
     setIsSidebarOpen(false);
-    setTimeout(() => setSelectedCar(null), 300); // 애니메이션 후 초기화
+    setTimeout(() => setSelectedCar(null), 300);
   };
 
   // 실제 차량 데이터
@@ -183,10 +350,15 @@ export const MarqueeGallery = () => {
     }
   ];
 
-  // 10개 차량을 3줄로 나누기
-  const row1Cars = cars.slice(0, 4);  // 1줄: 4대
-  const row2Cars = cars.slice(4, 7);  // 2줄: 3대  
-  const row3Cars = cars.slice(7, 10); // 3줄: 3대
+  // 카테고리별 차량 필터링
+  const sportsCars = cars.filter(car => car.category === 'sports');
+  const luxuryCars = cars.filter(car => car.category === 'luxury');
+  const suvCars = cars.filter(car => car.category === 'suv');
+
+  // 데스크탑용 차량 분할
+  const row1Cars = cars.slice(0, 4);
+  const row2Cars = cars.slice(4, 7);
+  const row3Cars = cars.slice(7, 10);
 
   return (
     <>
@@ -198,21 +370,83 @@ export const MarqueeGallery = () => {
           <p className="text-gray-400 text-sm sm:text-base md:text-lg">최고급 슈퍼카 컬렉션을 만나보세요</p>
         </div>
 
-        <div className="space-y-4 sm:space-y-6 md:space-y-8">
-          {/* 1줄: 왼쪽으로 이동 */}
-          <MarqueeRow cars={row1Cars} direction="left" speed="40s" onCarClick={handleCarClick} />
-          
-          {/* 2줄: 오른쪽으로 이동 (반대방향) */}
-          <MarqueeRow cars={row2Cars} direction="right" speed="45s" onCarClick={handleCarClick} />
-          
-          {/* 3줄: 왼쪽으로 이동 (느리게) */}
-          <MarqueeRow cars={row3Cars} direction="left" speed="35s" onCarClick={handleCarClick} />
-        </div>
+        {isMobile ? (
+          // 모바일: 넷플릭스 스타일 카테고리별 캐러셀
+          <div className="space-y-8">
+            {/* 카테고리 필터 버튼 */}
+            <div className="flex gap-2 px-4 overflow-x-auto scrollbar-hide">
+              <button
+                onClick={() => setSelectedCategory('all')}
+                className={`px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-colors ${
+                  selectedCategory === 'all' 
+                    ? 'bg-blue-600 text-white' 
+                    : 'bg-gray-800 text-gray-400 border border-gray-700'
+                }`}
+              >
+                전체
+              </button>
+              <button
+                onClick={() => setSelectedCategory('sports')}
+                className={`px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-colors ${
+                  selectedCategory === 'sports' 
+                    ? 'bg-blue-600 text-white' 
+                    : 'bg-gray-800 text-gray-400 border border-gray-700'
+                }`}
+              >
+                스포츠카
+              </button>
+              <button
+                onClick={() => setSelectedCategory('luxury')}
+                className={`px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-colors ${
+                  selectedCategory === 'luxury' 
+                    ? 'bg-blue-600 text-white' 
+                    : 'bg-gray-800 text-gray-400 border border-gray-700'
+                }`}
+              >
+                럭셔리
+              </button>
+              <button
+                onClick={() => setSelectedCategory('suv')}
+                className={`px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-colors ${
+                  selectedCategory === 'suv' 
+                    ? 'bg-blue-600 text-white' 
+                    : 'bg-gray-800 text-gray-400 border border-gray-700'
+                }`}
+              >
+                SUV
+              </button>
+            </div>
 
-        {/* 모바일 힌트 */}
-        <div className="text-center mt-6 sm:mt-8 md:hidden px-4">
-          <p className="text-xs sm:text-sm text-gray-500">차량을 터치하면 정지됩니다</p>
-        </div>
+            {/* 선택된 카테고리에 따른 캐러셀 표시 */}
+            {selectedCategory === 'all' ? (
+              <>
+                <NetflixCarousel cars={sportsCars} onCarClick={handleCarClick} category="sports" />
+                <NetflixCarousel cars={luxuryCars} onCarClick={handleCarClick} category="luxury" />
+                {suvCars.length > 0 && (
+                  <NetflixCarousel cars={suvCars} onCarClick={handleCarClick} category="suv" />
+                )}
+              </>
+            ) : selectedCategory === 'sports' ? (
+              <NetflixCarousel cars={sportsCars} onCarClick={handleCarClick} />
+            ) : selectedCategory === 'luxury' ? (
+              <NetflixCarousel cars={luxuryCars} onCarClick={handleCarClick} />
+            ) : (
+              <NetflixCarousel cars={suvCars} onCarClick={handleCarClick} />
+            )}
+
+            {/* 스와이프 힌트 */}
+            <div className="text-center mt-4 px-4">
+              <p className="text-xs text-gray-500">좌우로 스와이프하여 더 많은 차량을 보세요</p>
+            </div>
+          </div>
+        ) : (
+          // 데스크탑: 기존 마퀴 애니메이션
+          <div className="space-y-4 sm:space-y-6 md:space-y-8">
+            <MarqueeRow cars={row1Cars} direction="left" speed="40s" onCarClick={handleCarClick} />
+            <MarqueeRow cars={row2Cars} direction="right" speed="45s" onCarClick={handleCarClick} />
+            <MarqueeRow cars={row3Cars} direction="left" speed="35s" onCarClick={handleCarClick} />
+          </div>
+        )}
       </section>
 
       {/* 결제 사이드바 */}
