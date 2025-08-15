@@ -31,16 +31,16 @@ export const Navigation = () => {
   return (
     <nav
       className={cn(
-        'fixed top-0 w-full z-50 transition-all duration-300',
+        'fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300',
         isScrolled 
-          ? 'bg-black/95 backdrop-blur-xl py-4' 
-          : 'bg-gradient-to-b from-black/70 to-transparent py-6'
+          ? 'bg-slate-950/95 backdrop-blur-xl py-3 sm:py-4' 
+          : 'bg-gradient-to-b from-slate-950/70 to-transparent py-4 sm:py-6'
       )}
     >
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="flex items-center justify-between">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between w-full">
           {/* Logo */}
-          <Link href="/" className="text-blue-600 text-2xl font-bold z-10">
+          <Link href="/" className="text-sky-400 text-2xl font-bold z-10">
             RENTIP
           </Link>
 
@@ -58,7 +58,7 @@ export const Navigation = () => {
                   className={cn(
                     "relative cursor-pointer text-sm font-semibold px-6 py-2 rounded-full transition-colors",
                     "text-white/80 hover:text-white",
-                    isActive && "text-blue-400"
+                    isActive && "text-sky-400"
                   )}
                 >
                   <span className="hidden lg:inline">{item.label}</span>
@@ -68,7 +68,7 @@ export const Navigation = () => {
                   {isActive && (
                     <motion.div
                       layoutId="navHighlight"
-                      className="absolute inset-0 w-full bg-blue-500/20 rounded-full -z-10"
+                      className="absolute inset-0 w-full bg-sky-400/30 rounded-full -z-10"
                       initial={false}
                       transition={{
                         type: "spring",
@@ -76,10 +76,10 @@ export const Navigation = () => {
                         damping: 30,
                       }}
                     >
-                      <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-blue-500 rounded-t-full">
-                        <div className="absolute w-12 h-6 bg-blue-500/30 rounded-full blur-md -top-2 -left-2" />
-                        <div className="absolute w-8 h-6 bg-blue-500/20 rounded-full blur-md -top-1" />
-                        <div className="absolute w-4 h-4 bg-blue-500/20 rounded-full blur-sm top-0 left-2" />
+                      <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-sky-400 rounded-t-full">
+                        <div className="absolute w-12 h-6 bg-sky-400/40 rounded-full blur-md -top-2 -left-2" />
+                        <div className="absolute w-8 h-6 bg-sky-400/30 rounded-full blur-md -top-1" />
+                        <div className="absolute w-4 h-4 bg-sky-400/30 rounded-full blur-sm top-0 left-2" />
                       </div>
                     </motion.div>
                   )}
@@ -92,7 +92,7 @@ export const Navigation = () => {
           <div className="hidden md:block">
             <a
               href="tel:010-2984-1379"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg"
+              className="bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg"
             >
               010-2984-1379
             </a>
@@ -100,10 +100,11 @@ export const Navigation = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-white transition-colors duration-300 p-2"
+            className="md:hidden text-white transition-colors duration-300 p-2 z-10"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="메뉴 열기"
           >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
       </div>
@@ -116,7 +117,7 @@ export const Navigation = () => {
           height: isMobileMenuOpen ? 'auto' : 0
         }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
-        className="md:hidden bg-black/95 backdrop-blur-lg overflow-hidden"
+        className="md:hidden bg-slate-950/95 backdrop-blur-lg overflow-hidden"
       >
         <div className="px-6 py-4 space-y-4">
           {navItems.map((item, index) => {
@@ -125,7 +126,7 @@ export const Navigation = () => {
               <motion.a
                 key={item.label}
                 href={item.href}
-                className="flex items-center gap-3 text-white hover:text-blue-400 py-2 transition-colors"
+                className="flex items-center gap-3 text-white hover:text-sky-400 py-2 transition-colors"
                 onClick={() => {
                   setActiveTab(item.label);
                   setIsMobileMenuOpen(false);
@@ -147,7 +148,7 @@ export const Navigation = () => {
           })}
           <motion.a
             href="tel:010-2984-1379"
-            className="flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-3 rounded-full text-center mt-4 transition-all hover:bg-blue-700"
+            className="flex items-center justify-center gap-2 bg-sky-500 text-white px-4 py-3 rounded-full text-center mt-4 transition-all hover:bg-sky-600"
             onClick={() => setIsMobileMenuOpen(false)}
             initial={{ opacity: 0, y: 20 }}
             animate={{ 

@@ -16,10 +16,18 @@ export const metadata = {
   description: '람보르기니, 벤틀리, 포르쉐 등 최고급 수입차 렌탈 서비스',
 };
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: 'yes',
+  viewportFit: 'cover',
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko" className={`${inter.className} scroll-smooth`}>
-      <body className="bg-black text-white antialiased">
+      <body className="bg-slate-950 text-white antialiased">
         <Script 
           src="https://js.tosspayments.com/v2/standard" 
           strategy="afterInteractive"

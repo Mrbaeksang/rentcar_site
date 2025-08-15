@@ -14,7 +14,7 @@ export const Footer = () => {
           {/* 회사 정보 */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-4">
-              <Car className="w-8 h-8 text-blue-600" />
+              <Car className="w-8 h-8 text-sky-500" />
               <h3 className="text-2xl font-black text-white">RENTIP</h3>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
@@ -46,22 +46,22 @@ export const Footer = () => {
             <h4 className="text-white font-bold text-lg">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="#cars" className="text-gray-400 hover:text-blue-500 transition-colors text-sm">
+                <Link href="#cars" className="text-gray-400 hover:text-sky-500 transition-colors text-sm">
                   차량 컬렉션
                 </Link>
               </li>
               <li>
-                <Link href="#services" className="text-gray-400 hover:text-blue-500 transition-colors text-sm">
+                <Link href="#services" className="text-gray-400 hover:text-sky-500 transition-colors text-sm">
                   서비스 안내
                 </Link>
               </li>
               <li>
-                <Link href="#gallery" className="text-gray-400 hover:text-blue-500 transition-colors text-sm">
+                <Link href="#gallery" className="text-gray-400 hover:text-sky-500 transition-colors text-sm">
                   갤러리
                 </Link>
               </li>
               <li>
-                <Link href="#contact" className="text-gray-400 hover:text-blue-500 transition-colors text-sm">
+                <Link href="#contact" className="text-gray-400 hover:text-sky-500 transition-colors text-sm">
                   오시는 길
                 </Link>
               </li>
@@ -73,20 +73,20 @@ export const Footer = () => {
             <h4 className="text-white font-bold text-lg">Contact Info</h4>
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
-                <Phone size={16} className="text-blue-500 mt-0.5" />
+                <Phone size={16} className="text-sky-500 mt-0.5" />
                 <div>
                   <p className="text-white font-semibold">{siteConfig.phoneDisplay}</p>
                   <p className="text-gray-500 text-xs">24시간 상담 가능</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
-                <Mail size={16} className="text-blue-500 mt-0.5" />
+                <Mail size={16} className="text-sky-500 mt-0.5" />
                 <div>
                   <p className="text-gray-400 text-sm">{siteConfig.email}</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
-                <MapPin size={16} className="text-blue-500 mt-0.5 flex-shrink-0" />
+                <MapPin size={16} className="text-sky-500 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="text-gray-400 text-sm">{siteConfig.address}</p>
                 </div>
@@ -99,15 +99,15 @@ export const Footer = () => {
             <h4 className="text-white font-bold text-lg">Business Hours</h4>
             <ul className="space-y-2">
               <li className="flex items-center gap-3">
-                <Clock size={16} className="text-blue-500" />
+                <Clock size={16} className="text-sky-500" />
                 <div>
-                  <p className="text-gray-400 text-sm">평일: 09:00 - 21:00</p>
-                  <p className="text-gray-400 text-sm">주말: 10:00 - 20:00</p>
+                  <p className="text-gray-400 text-sm">연중무휴 24시간</p>
+                  <p className="text-gray-500 text-xs">24/7 Open</p>
                 </div>
               </li>
-              <li className="mt-4 p-3 bg-blue-600/10 border border-blue-600/30 rounded-lg">
-                <p className="text-blue-500 text-sm font-semibold">연중무휴 운영</p>
-                <p className="text-gray-400 text-xs mt-1">명절 기간 별도 공지</p>
+              <li className="mt-4 p-3 bg-sky-600/10 border border-sky-600/30 rounded-lg">
+                <p className="text-sky-500 text-sm font-semibold">언제든 연락주세요</p>
+                <p className="text-gray-400 text-xs mt-1">심야/새벽 예약 가능</p>
               </li>
             </ul>
           </div>
@@ -135,8 +135,8 @@ export const Footer = () => {
 
       {/* 배경 장식 */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl" />
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl" />
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-sky-600/5 rounded-full blur-3xl" />
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-sky-600/5 rounded-full blur-3xl" />
       </div>
     </footer>
   );

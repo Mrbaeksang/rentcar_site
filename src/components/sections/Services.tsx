@@ -22,7 +22,7 @@ export const Services = () => {
   ];
 
   return (
-    <section id="services" className="py-12 sm:py-16 md:py-20 lg:py-24 px-4 bg-zinc-900">
+    <section id="services" className="py-16 md:py-24 px-4 bg-slate-950">
       <div className="max-w-7xl mx-auto">
         <h2 
           className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-center mb-8 sm:mb-12 md:mb-16 text-white"

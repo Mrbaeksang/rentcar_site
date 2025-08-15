@@ -49,7 +49,7 @@ export const FeaturedCars = () => {
   ];
 
   return (
-    <section id="cars" className="py-12 sm:py-16 md:py-20 lg:py-24 px-4 bg-black">
+    <section id="cars" className="py-16 md:py-24 px-4 bg-slate-950">
       <div className="max-w-7xl mx-auto">
         <h2 
           className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-center mb-8 sm:mb-12 md:mb-16 text-white"
@@ -64,16 +64,16 @@ export const FeaturedCars = () => {
               key={car.id}
               data-aos="fade-up"
               data-aos-delay={index * 100}
-              className="group cursor-pointer"
+              className="group cursor-pointer transition-all duration-300 hover:scale-105"
             >
               {/* Image Container - 모바일 최적화 */}
-              <div className="relative h-48 sm:h-56 md:h-64 lg:h-72 overflow-hidden bg-gray-900 rounded-t-xl">
+              <div className="relative h-48 sm:h-56 md:h-64 lg:h-72 overflow-hidden bg-gray-900 rounded-t-xl shadow-lg group-hover:shadow-2xl transition-shadow duration-300">
                 <Image
                   src={car.image}
                   alt={`${car.brand} ${car.model}`}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="object-cover group-hover:scale-110 transition-transform duration-700"
                   loading="lazy"
                 />
                 {/* Dark Overlay on Hover */}
@@ -89,10 +89,10 @@ export const FeaturedCars = () => {
                   {car.model}
                 </p>
                 <div className="flex items-baseline gap-1 sm:gap-2">
-                  <span className="text-xl sm:text-2xl font-black text-white">
+                  <span className="text-2xl sm:text-3xl md:text-4xl font-black text-sky-400">
                     {car.price}
                   </span>
-                  <span className="text-sm sm:text-base text-gray-500">만원/일</span>
+                  <span className="text-base sm:text-lg text-gray-400">만원/일</span>
                 </div>
               </div>
             </div>

@@ -44,15 +44,15 @@ const MarqueeRow = ({ cars, direction, speed, onCarClick }: MarqueeRowProps) => 
         {repeatedCars.map((car, index) => (
           <div 
             key={`${car.id}-${index}`}
-            className="flex-shrink-0 group cursor-pointer"
+            className="flex-shrink-0 group cursor-pointer transition-all duration-300 hover:scale-105"
             onClick={() => onCarClick(car)}
           >
-            <div className="relative w-72 h-44 sm:w-80 sm:h-48 md:w-96 md:h-56 lg:w-[420px] lg:h-64 overflow-hidden rounded-xl shadow-2xl">
+            <div className="relative w-72 h-44 sm:w-80 sm:h-48 md:w-96 md:h-56 lg:w-[420px] lg:h-64 overflow-hidden rounded-xl shadow-xl group-hover:shadow-2xl transition-shadow duration-300">
               <Image 
                 src={car.image} 
                 alt={`${car.brand} ${car.model}`}
                 fill
-                className="object-cover group-hover:scale-110 transition-transform duration-700"
+                className="object-cover group-hover:scale-115 transition-transform duration-700"
               />
               
               {/* 오버레이 */}
@@ -64,12 +64,12 @@ const MarqueeRow = ({ cars, direction, speed, onCarClick }: MarqueeRowProps) => 
                 <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-300 mb-1 sm:mb-2">{car.model}</p>
                 <div className="flex items-center justify-between">
                   <div className="flex items-baseline gap-1">
-                    <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-black text-yellow-400">
+                    <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-sky-400">
                       {car.price}
                     </span>
-                    <span className="text-[10px] sm:text-xs md:text-sm text-gray-400">만원/일</span>
+                    <span className="text-sm sm:text-base md:text-lg text-gray-400">만원/일</span>
                   </div>
-                  <button className="px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-[10px] sm:text-xs md:text-sm font-semibold transition-colors">
+                  <button className="px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 bg-sky-500 hover:bg-sky-600 rounded-lg text-[10px] sm:text-xs md:text-sm font-semibold transition-colors">
                     예약
                   </button>
                 </div>
@@ -198,13 +198,13 @@ const NetflixCarousel = ({ cars, onCarClick, category }: NetflixCarouselProps) =
                     <p className="text-gray-300 text-sm mb-2">{car.model}</p>
                     <div className="flex items-center justify-between">
                       <div className="flex items-baseline gap-1">
-                        <span className="text-2xl font-black text-blue-400">
+                        <span className="text-3xl font-black text-sky-400">
                           {car.price}
                         </span>
-                        <span className="text-xs text-gray-400">만원/일</span>
+                        <span className="text-base text-gray-400">만원/일</span>
                       </div>
                       <button 
-                        className="px-4 py-2 bg-blue-600 text-white rounded-full text-sm font-semibold"
+                        className="px-4 py-2 bg-sky-500 text-white rounded-full text-sm font-semibold"
                         onClick={(e) => {
                           e.stopPropagation();
                           onCarClick(car);
@@ -228,7 +228,7 @@ const NetflixCarousel = ({ cars, onCarClick, category }: NetflixCarouselProps) =
               onClick={() => setCurrentIndex(index)}
               className={`h-1.5 rounded-full transition-all duration-300 ${
                 index === currentIndex 
-                  ? 'w-8 bg-blue-500' 
+                  ? 'w-8 bg-sky-400' 
                   : 'w-1.5 bg-gray-600'
               }`}
             />
@@ -362,7 +362,7 @@ export const MarqueeGallery = () => {
 
   return (
     <>
-      <section id="gallery" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-black overflow-hidden">
+      <section id="gallery" className="py-16 md:py-24 bg-slate-950 overflow-hidden">
         <div className="mb-8 sm:mb-10 md:mb-12 text-center px-4">
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white mb-2 sm:mb-4">
             OUR COLLECTION
@@ -379,7 +379,7 @@ export const MarqueeGallery = () => {
                 onClick={() => setSelectedCategory('all')}
                 className={`px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-colors ${
                   selectedCategory === 'all' 
-                    ? 'bg-blue-600 text-white' 
+                    ? 'bg-sky-500 text-white' 
                     : 'bg-gray-800 text-gray-400 border border-gray-700'
                 }`}
               >
@@ -389,7 +389,7 @@ export const MarqueeGallery = () => {
                 onClick={() => setSelectedCategory('sports')}
                 className={`px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-colors ${
                   selectedCategory === 'sports' 
-                    ? 'bg-blue-600 text-white' 
+                    ? 'bg-sky-500 text-white' 
                     : 'bg-gray-800 text-gray-400 border border-gray-700'
                 }`}
               >
@@ -399,7 +399,7 @@ export const MarqueeGallery = () => {
                 onClick={() => setSelectedCategory('luxury')}
                 className={`px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-colors ${
                   selectedCategory === 'luxury' 
-                    ? 'bg-blue-600 text-white' 
+                    ? 'bg-sky-500 text-white' 
                     : 'bg-gray-800 text-gray-400 border border-gray-700'
                 }`}
               >
@@ -409,7 +409,7 @@ export const MarqueeGallery = () => {
                 onClick={() => setSelectedCategory('suv')}
                 className={`px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-colors ${
                   selectedCategory === 'suv' 
-                    ? 'bg-blue-600 text-white' 
+                    ? 'bg-sky-500 text-white' 
                     : 'bg-gray-800 text-gray-400 border border-gray-700'
                 }`}
               >
