@@ -2,14 +2,13 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { PaymentSidebar } from '@/components/PaymentSidebar';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { TextReveal } from '@/components/animations/TextReveal';
 
 interface Car {
   id: number;
   brand: string;
   model: string;
-  price: number;
   image: string;
   category: string;
 }
@@ -18,11 +17,10 @@ interface MarqueeRowProps {
   cars: Car[];
   direction: 'left' | 'right';
   speed: string;
-  onCarClick: (car: Car) => void;
 }
 
 // 데스크탑용 마퀴 컴포넌트 (기존 유지)
-const MarqueeRow = ({ cars, direction, speed, onCarClick }: MarqueeRowProps) => {
+const MarqueeRow = ({ cars, direction, speed }: MarqueeRowProps) => {
   const [isPaused, setIsPaused] = useState(false);
   
   // 차량을 3번 복제해서 무한 루프 만들기
@@ -45,7 +43,6 @@ const MarqueeRow = ({ cars, direction, speed, onCarClick }: MarqueeRowProps) => 
           <div 
             key={`${car.id}-${index}`}
             className="flex-shrink-0 group cursor-pointer transition-all duration-300 hover:scale-105"
-            onClick={() => onCarClick(car)}
           >
             <div className="relative w-72 h-44 sm:w-80 sm:h-48 md:w-96 md:h-56 lg:w-[420px] lg:h-64 overflow-hidden rounded-xl shadow-xl group-hover:shadow-2xl transition-shadow duration-300">
               <Image 
@@ -61,18 +58,7 @@ const MarqueeRow = ({ cars, direction, speed, onCarClick }: MarqueeRowProps) => 
               {/* 차량 정보 */}
               <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 text-white">
                 <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold mb-0.5 sm:mb-1">{car.brand}</h3>
-                <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-300 mb-1 sm:mb-2">{car.model}</p>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-sky-400">
-                      {car.price}
-                    </span>
-                    <span className="text-sm sm:text-base md:text-lg text-gray-400">만원/일</span>
-                  </div>
-                  <button className="px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 bg-sky-500 hover:bg-sky-600 rounded-lg text-[10px] sm:text-xs md:text-sm font-semibold transition-colors">
-                    예약
-                  </button>
-                </div>
+                <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-300">{car.model}</p>
               </div>
 
               {/* 카테고리 배지 */}
@@ -90,11 +76,10 @@ const MarqueeRow = ({ cars, direction, speed, onCarClick }: MarqueeRowProps) => 
 // 모바일용 넷플릭스 스타일 컴포넌트
 interface NetflixCarouselProps {
   cars: Car[];
-  onCarClick: (car: Car) => void;
   category?: string;
 }
 
-const NetflixCarousel = ({ cars, onCarClick, category }: NetflixCarouselProps) => {
+const NetflixCarousel = ({ cars, category }: NetflixCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
@@ -178,7 +163,6 @@ const NetflixCarousel = ({ cars, onCarClick, category }: NetflixCarouselProps) =
               <div 
                 key={car.id}
                 className="flex-shrink-0 w-[85%] cursor-pointer"
-                onClick={() => onCarClick(car)}
               >
                 <div className="relative h-48 sm:h-56 overflow-hidden rounded-lg">
                   <Image 
@@ -195,24 +179,7 @@ const NetflixCarousel = ({ cars, onCarClick, category }: NetflixCarouselProps) =
                   {/* 차량 정보 - 심플하게 */}
                   <div className="absolute bottom-0 left-0 right-0 p-4">
                     <h4 className="text-white font-bold text-lg">{car.brand}</h4>
-                    <p className="text-gray-300 text-sm mb-2">{car.model}</p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-baseline gap-1">
-                        <span className="text-3xl font-black text-sky-400">
-                          {car.price}
-                        </span>
-                        <span className="text-base text-gray-400">만원/일</span>
-                      </div>
-                      <button 
-                        className="px-4 py-2 bg-sky-500 text-white rounded-full text-sm font-semibold"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onCarClick(car);
-                        }}
-                      >
-                        예약
-                      </button>
-                    </div>
+                    <p className="text-gray-300 text-sm">{car.model}</p>
                   </div>
                 </div>
               </div>
@@ -240,8 +207,6 @@ const NetflixCarousel = ({ cars, onCarClick, category }: NetflixCarouselProps) =
 };
 
 export const MarqueeGallery = () => {
-  const [selectedCar, setSelectedCar] = useState<Car | null>(null);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
@@ -256,23 +221,12 @@ export const MarqueeGallery = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const handleCarClick = (car: Car) => {
-    setSelectedCar(car);
-    setIsSidebarOpen(true);
-  };
-
-  const handleCloseSidebar = () => {
-    setIsSidebarOpen(false);
-    setTimeout(() => setSelectedCar(null), 300);
-  };
-
   // 실제 차량 데이터
   const cars: Car[] = [
     {
       id: 1,
       brand: 'LAMBORGHINI',
       model: 'Huracán EVO',
-      price: 150,
       image: 'https://images.unsplash.com/photo-1621135802920-133df287f89c?w=800&q=80',
       category: 'sports'
     },
@@ -280,7 +234,6 @@ export const MarqueeGallery = () => {
       id: 2,
       brand: 'BENTLEY',
       model: 'Continental GT',
-      price: 120,
       image: 'https://images.unsplash.com/photo-1631295868223-63265b40d9e4?w=800&q=80',
       category: 'luxury'
     },
@@ -288,7 +241,6 @@ export const MarqueeGallery = () => {
       id: 3,
       brand: 'PORSCHE',
       model: '911 Turbo S',
-      price: 100,
       image: 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800&q=80',
       category: 'sports'
     },
@@ -296,7 +248,6 @@ export const MarqueeGallery = () => {
       id: 4,
       brand: 'FERRARI',
       model: 'F8 Tributo',
-      price: 180,
       image: 'https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800&q=80',
       category: 'sports'
     },
@@ -304,7 +255,6 @@ export const MarqueeGallery = () => {
       id: 5,
       brand: 'MERCEDES',
       model: 'G63 AMG',
-      price: 90,
       image: 'https://images.unsplash.com/photo-1563720360172-67b8f3dce741?w=800&q=80',
       category: 'suv'
     },
@@ -312,7 +262,6 @@ export const MarqueeGallery = () => {
       id: 6,
       brand: 'ROLLS-ROYCE',
       model: 'Ghost',
-      price: 200,
       image: 'https://images.unsplash.com/photo-1631295868223-63265b40d9e4?w=800&q=80',
       category: 'luxury'
     },
@@ -320,7 +269,6 @@ export const MarqueeGallery = () => {
       id: 7,
       brand: 'ASTON MARTIN',
       model: 'DB11',
-      price: 130,
       image: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=80',
       category: 'luxury'
     },
@@ -328,7 +276,6 @@ export const MarqueeGallery = () => {
       id: 8,
       brand: 'MCLAREN',
       model: '720S',
-      price: 160,
       image: 'https://images.unsplash.com/photo-1621135802920-133df287f89c?w=800&q=80',
       category: 'sports'
     },
@@ -336,7 +283,6 @@ export const MarqueeGallery = () => {
       id: 9,
       brand: 'BMW',
       model: 'M8 Competition',
-      price: 85,
       image: 'https://images.unsplash.com/photo-1617654112368-307921291f42?w=800&q=80',
       category: 'sports'
     },
@@ -344,7 +290,6 @@ export const MarqueeGallery = () => {
       id: 10,
       brand: 'AUDI',
       model: 'R8 V10',
-      price: 110,
       image: 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800&q=80',
       category: 'sports'
     }
@@ -361,13 +306,27 @@ export const MarqueeGallery = () => {
   const row3Cars = cars.slice(7, 10);
 
   return (
-    <>
-      <section id="gallery" className="py-16 md:py-24 bg-slate-950 overflow-hidden">
+    <section id="gallery" className="py-16 md:py-24 bg-slate-950 overflow-hidden">
         <div className="mb-8 sm:mb-10 md:mb-12 text-center px-4">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white mb-2 sm:mb-4">
+          <TextReveal
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white mb-2 sm:mb-4 block"
+            splitType="words"
+            animationType="scaleIn"
+            duration={0.6}
+            stagger={0.1}
+          >
             OUR COLLECTION
-          </h2>
-          <p className="text-gray-400 text-sm sm:text-base md:text-lg">최고급 슈퍼카 컬렉션을 만나보세요</p>
+          </TextReveal>
+          <TextReveal
+            className="text-gray-400 text-sm sm:text-base md:text-lg block"
+            splitType="words"
+            animationType="fadeUp"
+            duration={0.5}
+            stagger={0.05}
+            delay={0.3}
+          >
+            최고급 슈퍼카 컬렉션을 만나보세요
+          </TextReveal>
         </div>
 
         {isMobile ? (
@@ -420,18 +379,18 @@ export const MarqueeGallery = () => {
             {/* 선택된 카테고리에 따른 캐러셀 표시 */}
             {selectedCategory === 'all' ? (
               <>
-                <NetflixCarousel cars={sportsCars} onCarClick={handleCarClick} category="sports" />
-                <NetflixCarousel cars={luxuryCars} onCarClick={handleCarClick} category="luxury" />
+                <NetflixCarousel cars={sportsCars} category="sports" />
+                <NetflixCarousel cars={luxuryCars} category="luxury" />
                 {suvCars.length > 0 && (
-                  <NetflixCarousel cars={suvCars} onCarClick={handleCarClick} category="suv" />
+                  <NetflixCarousel cars={suvCars} category="suv" />
                 )}
               </>
             ) : selectedCategory === 'sports' ? (
-              <NetflixCarousel cars={sportsCars} onCarClick={handleCarClick} />
+              <NetflixCarousel cars={sportsCars} />
             ) : selectedCategory === 'luxury' ? (
-              <NetflixCarousel cars={luxuryCars} onCarClick={handleCarClick} />
+              <NetflixCarousel cars={luxuryCars} />
             ) : (
-              <NetflixCarousel cars={suvCars} onCarClick={handleCarClick} />
+              <NetflixCarousel cars={suvCars} />
             )}
 
             {/* 스와이프 힌트 */}
@@ -442,19 +401,11 @@ export const MarqueeGallery = () => {
         ) : (
           // 데스크탑: 기존 마퀴 애니메이션
           <div className="space-y-4 sm:space-y-6 md:space-y-8">
-            <MarqueeRow cars={row1Cars} direction="left" speed="40s" onCarClick={handleCarClick} />
-            <MarqueeRow cars={row2Cars} direction="right" speed="45s" onCarClick={handleCarClick} />
-            <MarqueeRow cars={row3Cars} direction="left" speed="35s" onCarClick={handleCarClick} />
+            <MarqueeRow cars={row1Cars} direction="left" speed="40s" />
+            <MarqueeRow cars={row2Cars} direction="right" speed="45s" />
+            <MarqueeRow cars={row3Cars} direction="left" speed="35s" />
           </div>
         )}
-      </section>
-
-      {/* 결제 사이드바 */}
-      <PaymentSidebar 
-        isOpen={isSidebarOpen}
-        onClose={handleCloseSidebar}
-        car={selectedCar || undefined}
-      />
-    </>
+    </section>
   );
 };

@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { siteConfig } from '@/config/site';
 import FlowingMenu from '@/components/FlowingMenu';
+import { TextReveal } from '@/components/animations/TextReveal';
+import { TypeWriter } from '@/components/animations/TypeWriter';
 
 export const Hero = () => {
   // 초기값을 서버 렌더링과 일치시키기 위해 true로 설정 (모바일 우선)
@@ -67,20 +69,40 @@ export const Hero = () => {
         {/* Main Title - 모바일 크기 조정 */}
         <div className="mb-6 sm:mb-8">
           <h1 className="text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black mb-4 sm:mb-6 tracking-tight">
-            <span className="text-sky-400 drop-shadow-[0_2px_4px_rgba(255,255,255,0.9)] sm:drop-shadow-[0_4px_8px_rgba(255,255,255,0.9)] [text-shadow:_0_0_10px_rgba(255,255,255,0.8),_0_0_20px_rgba(255,255,255,0.6)] sm:[text-shadow:_0_0_20px_rgba(255,255,255,0.8),_0_0_40px_rgba(255,255,255,0.6)]">
+            <TextReveal
+              className="text-sky-400 drop-shadow-[0_2px_4px_rgba(255,255,255,0.9)] sm:drop-shadow-[0_4px_8px_rgba(255,255,255,0.9)] [text-shadow:_0_0_10px_rgba(255,255,255,0.8),_0_0_20px_rgba(255,255,255,0.6)] sm:[text-shadow:_0_0_20px_rgba(255,255,255,0.8),_0_0_40px_rgba(255,255,255,0.6)]"
+              splitType="chars"
+              animationType="rotateIn"
+              duration={0.8}
+              stagger={0.05}
+              delay={0.2}
+            >
               RENTIP
-            </span>
+            </TextReveal>
           </h1>
           
           {/* Elegant Subtitle - 모바일 크기 조정 */}
-          <p className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white/95 font-light tracking-wide leading-tight">
-            Premium Supercar Experience
-          </p>
+          <div className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white/95 font-light tracking-wide leading-tight">
+            <TypeWriter
+              text="Premium Supercar Experience"
+              speed={40}
+              startDelay={1000}
+              cursor={false}
+            />
+          </div>
           
           {/* Korean Subtitle - 모바일 크기 조정 */}
-          <p className="text-base xs:text-lg sm:text-xl md:text-2xl text-white/80 font-light mt-3 sm:mt-4 tracking-wider">
-            최고급 수퍼카로 특별한 순간을
-          </p>
+          <div className="text-base xs:text-lg sm:text-xl md:text-2xl text-white/80 font-light mt-3 sm:mt-4 tracking-wider">
+            <TextReveal
+              splitType="words"
+              animationType="fadeUp"
+              duration={0.6}
+              stagger={0.1}
+              delay={1.5}
+            >
+              최고급 수퍼카로 특별한 순간을
+            </TextReveal>
+          </div>
         </div>
 
         {/* Premium CTA Buttons with FlowingMenu - 모바일 높이 조정 */}

@@ -2,17 +2,21 @@
 
 import { Phone, Mail, MapPin, Instagram } from 'lucide-react';
 import { siteConfig } from '@/config/site';
+import { TextReveal } from '@/components/animations/TextReveal';
 
 export const Contact = () => {
   return (
     <section id="contact" className="py-16 md:py-24 px-4 bg-slate-950">
       <div className="max-w-7xl mx-auto">
-        <h2 
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-center mb-8 sm:mb-12 md:mb-16 text-white"
-          data-aos="fade-up"
+        <TextReveal
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-center mb-8 sm:mb-12 md:mb-16 text-white block"
+          splitType="chars"
+          animationType="fadeUp"
+          duration={0.6}
+          stagger={0.03}
         >
           CONTACT
-        </h2>
+        </TextReveal>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16">
           {/* Contact Info */}

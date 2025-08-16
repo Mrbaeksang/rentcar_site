@@ -15,7 +15,10 @@
       "mcp__playwright__browser_snapshot",
       "WebFetch(domain:www.pexels.com)",
       "Bash(git add:*)",
-      "mcp__tosspayments-integration-guide__get-v2-documents"
+      "mcp__tosspayments-integration-guide__get-v2-documents",
+      "mcp__playwright__browser_type",
+      "mcp__playwright__browser_close",
+      "WebFetch(domain:www.pngmart.com)"
     ],
     "deny": [],
     "ask": []

@@ -23,8 +23,8 @@ export const Navigation = () => {
   const navItems = [
     { label: '홈', href: '#home', icon: Home },
     { label: '차량', href: '#cars', icon: Car },
-    { label: '컬렉션', href: '#gallery', icon: Sparkles },
     { label: '서비스', href: '#services', icon: Settings },
+    { label: '컬렉션', href: '#gallery', icon: Sparkles },
     { label: '연락처', href: '#contact', icon: Phone }
   ];
 
