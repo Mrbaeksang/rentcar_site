@@ -12,42 +12,48 @@ export const FeaturedCars = () => {
       beforeCar: '소나타',
       afterCar: '포르쉐 911 터보',
       afterModel: 'Porsche 911 Turbo',
-      image: '/images/cars/porsche-911-turbo.jpg'
+      image: '/images/cars/porsche-911-turbo.jpg',
+      date: '2024.11.28'
     },
     {
       id: 2,
       beforeCar: 'K5',
       afterCar: '포르쉐 박스터',
       afterModel: 'Porsche Boxster',
-      image: '/images/cars/porsche-boxster.jpg'
+      image: '/images/cars/porsche-boxster.jpg',
+      date: '2024.12.15'
     },
     {
       id: 3,
       beforeCar: '싼타페',
       afterCar: 'G63 AMG',
       afterModel: 'Mercedes G63 AMG',
-      image: '/images/cars/mercedes-g63.jpg'
+      image: '/images/cars/mercedes-g63.jpg',
+      date: '2025.01.09'
     },
     {
       id: 4,
       beforeCar: '아반떼',
       afterCar: 'BMW M8',
       afterModel: 'BMW M8 Competition',
-      image: '/images/cars/bmw-m8.jpg'
+      image: '/images/cars/bmw-m8.jpg',
+      date: '2025.02.23'
     },
     {
       id: 5,
       beforeCar: '그랜저',
       afterCar: '벤틀리 컨티넨탈',
       afterModel: 'Bentley Continental GT',
-      image: '/images/cars/bentley-continental.jpg'
+      image: '/images/cars/bentley-continental.jpg',
+      date: '2025.04.17'
     },
     {
       id: 6,
       beforeCar: '팰리세이드',
       afterCar: '람보르기니 우루스',
       afterModel: 'Lamborghini Urus',
-      image: '/images/cars/lamborghini-urus.jpg'
+      image: '/images/cars/lamborghini-urus.jpg',
+      date: '2025.06.02'
     }
   ];
 
@@ -109,8 +115,9 @@ export const FeaturedCars = () => {
                         <span className="text-yellow-300 drop-shadow-[0_3px_8px_rgba(0,0,0,1)] bg-black/50 px-3 py-1 rounded">{upgrade.afterCar}</span>
                       </div>
                     </div>
-                    <div className="text-white text-3xl font-black mt-3 drop-shadow-[0_2px_6px_rgba(0,0,0,1)]">
+                    <div className="text-white text-3xl font-black mt-3 drop-shadow-[0_2px_6px_rgba(0,0,0,1)] flex items-center gap-3">
                       <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">대차완료!</span>
+                      <span className="text-white text-2xl font-bold">{upgrade.date}</span>
                     </div>
                   </div>
                 </div>
@@ -131,7 +138,7 @@ export const FeaturedCars = () => {
         <div className="text-center mt-12">
           <p className="text-gray-400 mb-6">렌팁만의 특별한 보험대차 서비스를 경험하세요</p>
           <a
-            href="tel:1599-4826"
+            href="tel:010-2984-1379"
             className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold text-lg rounded-full hover:shadow-2xl hover:shadow-sky-500/30 transition-all duration-300 hover:scale-105"
           >
             지금 바로 문의하기

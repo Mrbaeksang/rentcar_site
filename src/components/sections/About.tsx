@@ -153,11 +153,11 @@ export const About = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="tel:1599-4826"
+                href="tel:010-2984-1379"
                 className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-sky-500 to-purple-600 text-white font-bold rounded-full hover:shadow-2xl transition-all duration-300 hover:scale-105"
               >
                 <span>전화 상담</span>
-                <span className="ml-2">1599-4826</span>
+                <span className="ml-2">010-2984-1379</span>
               </a>
               <a
                 href="#contact"

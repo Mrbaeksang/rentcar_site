@@ -13,7 +13,7 @@ export const Navigation = () => {
 
   const navItems = [
     { label: '홈', href: '#home', icon: Home },
-    { label: '차량', href: '#cars', icon: Car },
+    { label: '보험대차', href: '#cars', icon: Car },
     { label: '서비스', href: '#services', icon: Shield },
     { label: '컬렉션', href: '#gallery', icon: Sparkles },
     { label: '후기', href: '#reviews', icon: MessageSquare },

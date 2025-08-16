@@ -43,26 +43,31 @@ export const Footer = () => {
 
           {/* 빠른 링크 */}
           <div className="space-y-4">
-            <h4 className="text-white font-bold text-lg">Explore</h4>
+            <h4 className="text-white font-bold text-lg">Quick Links</h4>
             <ul className="space-y-2">
               <li>
                 <Link href="#home" className="text-gray-400 hover:text-sky-500 transition-colors text-sm">
-                  메인
+                  메인 페이지
                 </Link>
               </li>
               <li>
                 <Link href="#cars" className="text-gray-400 hover:text-sky-500 transition-colors text-sm">
-                  프리미엄 차량
+                  보험대차 안내
                 </Link>
               </li>
               <li>
                 <Link href="#services" className="text-gray-400 hover:text-sky-500 transition-colors text-sm">
-                  보험대차 서비스
+                  렌탈 서비스
                 </Link>
               </li>
               <li>
                 <Link href="#gallery" className="text-gray-400 hover:text-sky-500 transition-colors text-sm">
-                  차량 갤러리
+                  보유 차량
+                </Link>
+              </li>
+              <li>
+                <Link href="#reviews" className="text-gray-400 hover:text-sky-500 transition-colors text-sm">
+                  고객 리뷰
                 </Link>
               </li>
               <li>

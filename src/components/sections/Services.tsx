@@ -233,7 +233,7 @@ export const Services = () => {
           <div className="text-center">
             <div className="inline-flex flex-col sm:flex-row gap-4">
               <a
-                href="tel:1599-4826"
+                href="tel:010-2984-1379"
                 className="inline-flex items-center justify-center px-10 py-5 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold text-lg rounded-full hover:shadow-2xl hover:shadow-sky-500/30 transition-all duration-300 hover:scale-105"
               >
                 <Phone className="w-6 h-6 mr-3" />
