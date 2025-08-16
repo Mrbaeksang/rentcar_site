@@ -1,9 +1,43 @@
 'use client';
 
-import { Phone, Car, CheckCircle, ArrowRight, MessageCircle } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Phone, Car, CheckCircle, ArrowRight, MessageCircle, Users, TrendingUp, FileCheck } from 'lucide-react';
 import { TextReveal } from '@/components/animations/TextReveal';
+import { CountUp } from '@/components/ui/CountUp';
 
 export const Services = () => {
+  const [isInView, setIsInView] = useState(false);
+  const statsRef = useRef<HTMLDivElement>(null);
+  
+  // 오늘 날짜 기반 실시간 카운터 (예시 데이터)
+  const today = new Date();
+  const hour = today.getHours();
+  const todayQueries = Math.floor(12 + hour * 1.5); // 시간당 1.5건씩 증가
+  
+  // Intersection Observer
+  useEffect(() => {
+    const currentRef = statsRef.current;
+    
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, []);
+
   // 3단계 프로세스
   const process = [
     {
@@ -61,6 +95,67 @@ export const Services = () => {
           >
             SERVICES
           </TextReveal>
+        </div>
+
+        {/* 실시간 통계 */}
+        <div ref={statsRef} className="mb-20">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-6xl mx-auto">
+            {/* 오늘 문의 */}
+            <div className="bg-gradient-to-br from-sky-500/20 to-sky-600/10 backdrop-blur-sm rounded-2xl p-6 border border-sky-500/30 text-center">
+              <div className="flex justify-center mb-3">
+                <Phone className="w-8 h-8 text-sky-400" />
+              </div>
+              <div className="text-3xl md:text-4xl font-bold text-white mb-2">
+                <CountUp end={todayQueries} duration={2000} inView={isInView} />
+                <span className="text-sky-400">건</span>
+              </div>
+              <p className="text-sm text-gray-400">오늘 문의</p>
+            </div>
+
+            {/* 일평균 처리 */}
+            <div className="bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 backdrop-blur-sm rounded-2xl p-6 border border-emerald-500/30 text-center">
+              <div className="flex justify-center mb-3">
+                <TrendingUp className="w-8 h-8 text-emerald-400" />
+              </div>
+              <div className="text-3xl md:text-4xl font-bold text-white mb-2">
+                <CountUp end={35} duration={2000} inView={isInView} />
+                <span className="text-emerald-400">건</span>
+              </div>
+              <p className="text-sm text-gray-400">일평균 처리</p>
+            </div>
+
+            {/* 누적 요청건수 */}
+            <div className="bg-gradient-to-br from-purple-500/20 to-purple-600/10 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/30 text-center">
+              <div className="flex justify-center mb-3">
+                <Users className="w-8 h-8 text-purple-400" />
+              </div>
+              <div className="text-3xl md:text-4xl font-bold text-white mb-2">
+                <CountUp end={12847} duration={2000} inView={isInView} />
+                <span className="text-purple-400">건</span>
+              </div>
+              <p className="text-sm text-gray-400">누적 요청건수</p>
+            </div>
+
+            {/* 누적 계약 */}
+            <div className="bg-gradient-to-br from-orange-500/20 to-orange-600/10 backdrop-blur-sm rounded-2xl p-6 border border-orange-500/30 text-center">
+              <div className="flex justify-center mb-3">
+                <FileCheck className="w-8 h-8 text-orange-400" />
+              </div>
+              <div className="text-3xl md:text-4xl font-bold text-white mb-2">
+                <CountUp end={8543} duration={2500} inView={isInView} />
+                <span className="text-orange-400">+</span>
+              </div>
+              <p className="text-sm text-gray-400">누적 계약</p>
+            </div>
+          </div>
+
+          {/* 실시간 업데이트 표시 */}
+          <div className="text-center mt-6">
+            <span className="inline-flex items-center gap-2 text-xs text-gray-500">
+              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+              실시간 업데이트
+            </span>
+          </div>
         </div>
 
         {/* 보험대차 메인 히어로 영역 */}

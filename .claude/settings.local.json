@@ -18,7 +18,9 @@
       "mcp__tosspayments-integration-guide__get-v2-documents",
       "mcp__playwright__browser_type",
       "mcp__playwright__browser_close",
-      "WebFetch(domain:www.pngmart.com)"
+      "WebFetch(domain:www.pngmart.com)",
+      "WebFetch(domain:developers.notion.com)",
+      "Bash(mv:*)"
     ],
     "deny": [],
     "ask": []

@@ -38,8 +38,8 @@ export const FloatingButtons = () => {
   return (
     <>
       <div className="fixed right-4 bottom-4 md:right-6 md:bottom-6 z-50 flex flex-col gap-3">
-        {/* Quick Payment Button - 카톡 버튼 위에 추가 */}
-        <motion.button
+        {/* Quick Payment Button - 주석처리로 비활성화 */}
+        {/* <motion.button
           onClick={handleQuickPayment}
           className="group relative w-14 h-14 md:w-16 md:h-16 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
           whileHover={{ scale: 1.1 }}
@@ -50,18 +50,15 @@ export const FloatingButtons = () => {
         >
           <CreditCard size={24} className="text-white" />
           
-          {/* Tooltip */}
           <div className="absolute right-full mr-3 px-3 py-2 bg-black/80 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
             빠른 예약
             <div className="absolute top-1/2 left-full w-0 h-0 border-l-4 border-r-0 border-t-4 border-b-4 border-l-black/80 border-t-transparent border-b-transparent transform -translate-y-1/2"></div>
           </div>
 
-          {/* Glow Effect */}
           <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/30 to-purple-600/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-lg"></div>
           
-          {/* Animated Ring */}
           <div className="absolute inset-0 rounded-full border-2 border-white/30 animate-pulse"></div>
-        </motion.button>
+        </motion.button> */}
 
         {/* Kakao Talk Button */}
         <motion.button

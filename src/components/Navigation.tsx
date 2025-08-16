@@ -4,29 +4,48 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { Home, Car, Settings, Phone, Menu, X, Sparkles } from 'lucide-react';
+import { Home, Car, Shield, Phone, Menu, X, Sparkles, MessageSquare } from 'lucide-react';
 
 export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('홈');
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   const navItems = [
     { label: '홈', href: '#home', icon: Home },
     { label: '차량', href: '#cars', icon: Car },
-    { label: '서비스', href: '#services', icon: Settings },
+    { label: '서비스', href: '#services', icon: Shield },
     { label: '컬렉션', href: '#gallery', icon: Sparkles },
+    { label: '후기', href: '#reviews', icon: MessageSquare },
     { label: '연락처', href: '#contact', icon: Phone }
   ];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+      
+      // 현재 보이는 섹션 감지
+      const sections = navItems.map(item => ({
+        id: item.href.substring(1),
+        label: item.label
+      }));
+      
+      for (const section of sections) {
+        const element = document.getElementById(section.id);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            setActiveTab(section.label);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // 초기 실행
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [navItems]);
 
   return (
     <nav
@@ -54,7 +73,14 @@ export const Navigation = () => {
                 <a
                   key={item.label}
                   href={item.href}
-                  onClick={() => setActiveTab(item.label)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setActiveTab(item.label);
+                    const element = document.querySelector(item.href);
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }}
                   className={cn(
                     "relative cursor-pointer text-sm font-semibold px-6 py-2 rounded-full transition-colors",
                     "text-white/80 hover:text-white",
@@ -127,9 +153,14 @@ export const Navigation = () => {
                 key={item.label}
                 href={item.href}
                 className="flex items-center gap-3 text-white hover:text-sky-400 py-2 transition-colors"
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
                   setActiveTab(item.label);
                   setIsMobileMenuOpen(false);
+                  const element = document.querySelector(item.href);
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
                 }}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ 

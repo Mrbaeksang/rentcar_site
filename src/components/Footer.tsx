@@ -43,21 +43,26 @@ export const Footer = () => {
 
           {/* 빠른 링크 */}
           <div className="space-y-4">
-            <h4 className="text-white font-bold text-lg">Quick Links</h4>
+            <h4 className="text-white font-bold text-lg">Explore</h4>
             <ul className="space-y-2">
               <li>
+                <Link href="#home" className="text-gray-400 hover:text-sky-500 transition-colors text-sm">
+                  메인
+                </Link>
+              </li>
+              <li>
                 <Link href="#cars" className="text-gray-400 hover:text-sky-500 transition-colors text-sm">
-                  차량 컬렉션
+                  프리미엄 차량
                 </Link>
               </li>
               <li>
                 <Link href="#services" className="text-gray-400 hover:text-sky-500 transition-colors text-sm">
-                  서비스 안내
+                  보험대차 서비스
                 </Link>
               </li>
               <li>
                 <Link href="#gallery" className="text-gray-400 hover:text-sky-500 transition-colors text-sm">
-                  갤러리
+                  차량 갤러리
                 </Link>
               </li>
               <li>
@@ -70,7 +75,7 @@ export const Footer = () => {
 
           {/* 연락처 정보 */}
           <div className="space-y-4">
-            <h4 className="text-white font-bold text-lg">Contact Info</h4>
+            <h4 className="text-white font-bold text-lg">Contact</h4>
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <Phone size={16} className="text-sky-500 mt-0.5" />
@@ -96,7 +101,7 @@ export const Footer = () => {
 
           {/* 영업 시간 */}
           <div className="space-y-4">
-            <h4 className="text-white font-bold text-lg">Business Hours</h4>
+            <h4 className="text-white font-bold text-lg">Operating Hours</h4>
             <ul className="space-y-2">
               <li className="flex items-center gap-3">
                 <Clock size={16} className="text-sky-500" />

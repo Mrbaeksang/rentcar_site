@@ -227,3 +227,16 @@ html {
     transform: translateX(0%);
   }
 }
+
+/* 3D 카드 효과를 위한 perspective 유틸리티 */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+/* line-clamp 유틸리티 (텍스트 줄 수 제한) */
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

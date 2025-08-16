@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { TextReveal } from '@/components/animations/TextReveal';
+import { ImageModal } from '@/components/ui/ImageModal';
 
 interface Car {
   id: number;
@@ -22,11 +23,13 @@ interface MarqueeRowProps {
 // 데스크탑용 마퀴 컴포넌트 (기존 유지)
 const MarqueeRow = ({ cars, direction, speed }: MarqueeRowProps) => {
   const [isPaused, setIsPaused] = useState(false);
+  const [selectedCar, setSelectedCar] = useState<Car | null>(null);
   
   // 차량을 3번 복제해서 무한 루프 만들기
   const repeatedCars = [...cars, ...cars, ...cars];
 
   return (
+    <>
     <div 
       className="relative overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
@@ -43,6 +46,7 @@ const MarqueeRow = ({ cars, direction, speed }: MarqueeRowProps) => {
           <div 
             key={`${car.id}-${index}`}
             className="flex-shrink-0 group cursor-pointer transition-all duration-300 hover:scale-105"
+            onClick={() => setSelectedCar(car)}
           >
             <div className="relative w-72 h-44 sm:w-80 sm:h-48 md:w-96 md:h-56 lg:w-[420px] lg:h-64 overflow-hidden rounded-xl shadow-xl group-hover:shadow-2xl transition-shadow duration-300">
               <Image 
@@ -55,8 +59,8 @@ const MarqueeRow = ({ cars, direction, speed }: MarqueeRowProps) => {
               {/* 오버레이 */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
               
-              {/* 차량 정보 */}
-              <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 text-white">
+              {/* 차량 정보 - 왼쪽 상단으로 이동 */}
+              <div className="absolute top-3 left-3 sm:top-4 sm:left-4 text-white">
                 <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold mb-0.5 sm:mb-1">{car.brand}</h3>
                 <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-300">{car.model}</p>
               </div>
@@ -70,6 +74,16 @@ const MarqueeRow = ({ cars, direction, speed }: MarqueeRowProps) => {
         ))}
       </div>
     </div>
+    
+    {/* Modal */}
+    <ImageModal
+      isOpen={!!selectedCar}
+      onClose={() => setSelectedCar(null)}
+      imageSrc={selectedCar?.image || ''}
+      title={selectedCar?.brand || ''}
+      subtitle={selectedCar?.model}
+    />
+    </>
   );
 };
 
@@ -83,6 +97,7 @@ const NetflixCarousel = ({ cars, category }: NetflixCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
+  const [selectedCar, setSelectedCar] = useState<Car | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -163,6 +178,7 @@ const NetflixCarousel = ({ cars, category }: NetflixCarouselProps) => {
               <div 
                 key={car.id}
                 className="flex-shrink-0 w-[85%] cursor-pointer"
+                onClick={() => setSelectedCar(car)}
               >
                 <div className="relative h-48 sm:h-56 overflow-hidden rounded-lg">
                   <Image 
@@ -202,6 +218,15 @@ const NetflixCarousel = ({ cars, category }: NetflixCarouselProps) => {
           ))}
         </div>
       </div>
+      
+      {/* Modal */}
+      <ImageModal
+        isOpen={!!selectedCar}
+        onClose={() => setSelectedCar(null)}
+        imageSrc={selectedCar?.image || ''}
+        title={selectedCar?.brand || ''}
+        subtitle={selectedCar?.model}
+      />
     </div>
   );
 };
@@ -225,72 +250,86 @@ export const MarqueeGallery = () => {
   const cars: Car[] = [
     {
       id: 1,
-      brand: 'LAMBORGHINI',
-      model: 'Huracán EVO',
-      image: 'https://images.unsplash.com/photo-1621135802920-133df287f89c?w=800&q=80',
-      category: 'sports'
+      brand: 'MERCEDES',
+      model: 'W223 S580',
+      image: '/images/cars/w223-s580.jpg',
+      category: 'luxury'
     },
     {
       id: 2,
-      brand: 'BENTLEY',
-      model: 'Continental GT',
-      image: 'https://images.unsplash.com/photo-1631295868223-63265b40d9e4?w=800&q=80',
+      brand: 'MERCEDES',
+      model: 'W213 E300',
+      image: '/images/cars/w213-e300.jpg',
       category: 'luxury'
     },
     {
       id: 3,
-      brand: 'PORSCHE',
-      model: '911 Turbo S',
-      image: 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800&q=80',
-      category: 'sports'
+      brand: 'MERCEDES',
+      model: 'W213 E220',
+      image: '/images/cars/w213-e220.jpg',
+      category: 'luxury'
     },
     {
       id: 4,
-      brand: 'FERRARI',
-      model: 'F8 Tributo',
-      image: 'https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800&q=80',
-      category: 'sports'
+      brand: 'MERCEDES',
+      model: 'W214 E300',
+      image: '/images/cars/w214-e300.jpg',
+      category: 'luxury'
     },
     {
       id: 5,
       brand: 'MERCEDES',
-      model: 'G63 AMG',
-      image: 'https://images.unsplash.com/photo-1563720360172-67b8f3dce741?w=800&q=80',
-      category: 'suv'
+      model: 'W222 S350',
+      image: '/images/cars/w222-s350.jpg',
+      category: 'luxury'
     },
     {
       id: 6,
-      brand: 'ROLLS-ROYCE',
-      model: 'Ghost',
-      image: 'https://images.unsplash.com/photo-1631295868223-63265b40d9e4?w=800&q=80',
-      category: 'luxury'
+      brand: 'MERCEDES',
+      model: 'W223 S63 AMG',
+      image: '/images/cars/w223-s63.jpg',
+      category: 'sports'
     },
     {
       id: 7,
-      brand: 'ASTON MARTIN',
-      model: 'DB11',
-      image: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=80',
-      category: 'luxury'
+      brand: 'MERCEDES',
+      model: 'G63 AMG',
+      image: '/images/cars/w464-g63.jpg',
+      category: 'suv'
     },
     {
       id: 8,
-      brand: 'MCLAREN',
-      model: '720S',
-      image: 'https://images.unsplash.com/photo-1621135802920-133df287f89c?w=800&q=80',
-      category: 'sports'
+      brand: 'BMW',
+      model: 'G30 520d',
+      image: '/images/cars/g30-520d.jpg',
+      category: 'luxury'
     },
     {
       id: 9,
       brand: 'BMW',
-      model: 'M8 Competition',
-      image: 'https://images.unsplash.com/photo-1617654112368-307921291f42?w=800&q=80',
-      category: 'sports'
+      model: 'G30 530i',
+      image: '/images/cars/g30-530i.jpg',
+      category: 'luxury'
     },
     {
       id: 10,
-      brand: 'AUDI',
-      model: 'R8 V10',
-      image: 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800&q=80',
+      brand: 'BMW',
+      model: 'G80 M3',
+      image: '/images/cars/g80-m3.jpg',
+      category: 'sports'
+    },
+    {
+      id: 11,
+      brand: 'BMW',
+      model: 'G82 M4',
+      image: '/images/cars/g82-m4.jpg',
+      category: 'sports'
+    },
+    {
+      id: 12,
+      brand: 'BMW',
+      model: 'F87 M2',
+      image: '/images/cars/f87-m2.jpg',
       category: 'sports'
     }
   ];
@@ -300,10 +339,10 @@ export const MarqueeGallery = () => {
   const luxuryCars = cars.filter(car => car.category === 'luxury');
   const suvCars = cars.filter(car => car.category === 'suv');
 
-  // 데스크탑용 차량 분할
-  const row1Cars = cars.slice(0, 4);
-  const row2Cars = cars.slice(4, 7);
-  const row3Cars = cars.slice(7, 10);
+  // 데스크탑용 차량 분할 - 12개 차량을 3개 row로 나눔
+  const row1Cars = cars.slice(0, 4);  // 1-4번 차량
+  const row2Cars = cars.slice(4, 8);  // 5-8번 차량
+  const row3Cars = cars.slice(8, 12); // 9-12번 차량
 
   return (
     <section id="gallery" className="py-16 md:py-24 bg-slate-950 overflow-hidden">
@@ -399,11 +438,11 @@ export const MarqueeGallery = () => {
             </div>
           </div>
         ) : (
-          // 데스크탑: 기존 마퀴 애니메이션
+          // 데스크탑: 기존 마퀴 애니메이션 (속도 증가)
           <div className="space-y-4 sm:space-y-6 md:space-y-8">
-            <MarqueeRow cars={row1Cars} direction="left" speed="40s" />
-            <MarqueeRow cars={row2Cars} direction="right" speed="45s" />
-            <MarqueeRow cars={row3Cars} direction="left" speed="35s" />
+            <MarqueeRow cars={row1Cars} direction="left" speed="25s" />
+            <MarqueeRow cars={row2Cars} direction="right" speed="30s" />
+            <MarqueeRow cars={row3Cars} direction="left" speed="20s" />
           </div>
         )}
     </section>
